@@ -43,9 +43,6 @@
       "implicitDependencies": [
         "todo-app"
       ]
-    },
-    "todos-types": {
-      "tags": []
     }
   }
 }

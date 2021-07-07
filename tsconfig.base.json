@@ -15,7 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@puppo/todos/types": ["libs/todos/types/src/index.ts"]
+      
     }
   },
   "exclude": ["node_modules", "tmp"]

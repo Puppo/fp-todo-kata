@@ -170,31 +170,6 @@
           }
         }
       }
-    },
-    "todos-types": {
-      "root": "libs/todos/types",
-      "sourceRoot": "libs/todos/types/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "libs/todos/types/**/*.ts"
-            ]
-          }
-        },
-        "test": {
-          "executor": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/libs/todos/types"
-          ],
-          "options": {
-            "jestConfig": "libs/todos/types/jest.config.js",
-            "passWithNoTests": true
-          }
-        }
-      }
     }
   },
   "cli": {
