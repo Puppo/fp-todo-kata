@@ -1,11 +1,17 @@
 import { Module } from '@nestjs/common';
 
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { ConfigurationModule, MongoModule } from '@puppo/shared/infrastructure';
+import { environment } from '../environments/environment';
+
+import { TodoHttpModule } from './todo/todo-http.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigurationModule.forRoot({
+      envFolder: environment.envFolder,
+    }),
+    MongoModule,
+    TodoHttpModule,
+  ],
 })
 export class AppModule {}
