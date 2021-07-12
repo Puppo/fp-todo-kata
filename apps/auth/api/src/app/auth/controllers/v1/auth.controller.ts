@@ -3,6 +3,7 @@ import { ApiTags } from '@nestjs/swagger';
 import {
   ApiBodyWithCodec,
   ApiOkResponseWithCodec,
+  ApiResponseWithCodec,
   mapTaskEToResponse,
   ValidationWithCodecPipe,
 } from '@puppo/shared/infrastructure';
@@ -19,6 +20,7 @@ import { UserService, mapTodoEntityToDto } from '@puppo/auth/domain';
 import * as TE from 'fp-ts/TaskEither';
 import * as O from 'fp-ts/Option';
 import { pipe, flow } from 'fp-ts/function';
+import { errorDtoCodec } from '@puppo/shared/kernel';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -32,6 +34,11 @@ export class AuthControllerV1 {
   @ApiOkResponseWithCodec({
     definition: userDtoCodec,
     description: 'The new user',
+  })
+  @ApiResponseWithCodec({
+    status: 500,
+    description: 'Internal Server Error',
+    definition: errorDtoCodec,
   })
   @Post('sign-up')
   async signUp(
@@ -51,6 +58,11 @@ export class AuthControllerV1 {
   @ApiOkResponseWithCodec({
     definition: userDtoCodec,
     description: 'The new user',
+  })
+  @ApiResponseWithCodec({
+    status: 500,
+    description: 'Internal Server Error',
+    definition: errorDtoCodec,
   })
   @Post('sign-in')
   async signIn(

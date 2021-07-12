@@ -7,6 +7,7 @@ import {
   ApiBodyWithCodec,
   ApiParamWithCodec,
   ValidationWithCodecPipe,
+  ApiResponseWithCodec,
 } from '@puppo/shared/infrastructure';
 import { TodoService, mapTodoEntityToDto } from '@puppo/todo/domain';
 import {
@@ -20,6 +21,7 @@ import {
 import { pipe, flow } from 'fp-ts/function';
 import * as TE from 'fp-ts/TaskEither';
 import * as O from 'fp-ts/Option';
+import { errorDtoCodec } from '@puppo/shared/kernel';
 
 @ApiTags('todos')
 @Controller('todos')
@@ -33,6 +35,11 @@ export class TodoController {
   @ApiOkResponseWithCodec({
     description: 'The info of the todo insert',
     definition: todoDtoCodec,
+  })
+  @ApiResponseWithCodec({
+    status: 500,
+    description: 'Internal Server Error',
+    definition: errorDtoCodec,
   })
   @Post()
   async insertTodo(
@@ -54,6 +61,11 @@ export class TodoController {
   @ApiOkResponseWithCodec({
     description: 'The todo',
     definition: todoDtoCodec,
+  })
+  @ApiResponseWithCodec({
+    status: 500,
+    description: 'Internal Server Error',
+    definition: errorDtoCodec,
   })
   @Get('/:id')
   async getById(
