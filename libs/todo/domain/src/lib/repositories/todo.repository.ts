@@ -2,7 +2,7 @@ import { ApplicationException } from '@puppo/shared/kernel';
 import * as TE from 'fp-ts/TaskEither';
 import * as O from 'fp-ts/Option';
 
-import { TodoEntity, TodoEntityId } from '../entity/todo.entity';
+import { TodoEntity, TodoEntityId } from '../entities/todo.entity';
 
 export abstract class TodoRepository {
   abstract save(
@@ -12,5 +12,3 @@ export abstract class TodoRepository {
     id: TodoEntityId
   ): TE.TaskEither<ApplicationException, O.Option<TodoEntity>>;
 }
-
-export const TODO_REPOSITORY = 'TodoRepository';

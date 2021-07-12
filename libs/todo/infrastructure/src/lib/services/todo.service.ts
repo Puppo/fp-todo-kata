@@ -1,10 +1,9 @@
-import { ClassProvider, Inject, Injectable } from '@nestjs/common';
+import { ClassProvider, Injectable } from '@nestjs/common';
 import {
   TodoEntity,
   TodoEntityId,
   TodoRepository,
   TodoService,
-  TODO_REPOSITORY,
 } from '@puppo/todo/domain';
 import { CreateTodoDto } from '@puppo/todo/dto';
 import { ApplicationException } from '@puppo/shared/kernel';
@@ -13,9 +12,7 @@ import * as O from 'fp-ts/Option';
 
 @Injectable()
 class TodoServiceImpl implements TodoService {
-  constructor(
-    @Inject(TODO_REPOSITORY) private readonly todoRepository: TodoRepository
-  ) {}
+  constructor(private readonly todoRepository: TodoRepository) {}
 
   createTodo(
     todoDto: CreateTodoDto

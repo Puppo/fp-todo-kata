@@ -4,5 +4,8 @@ export * from './lib/documentation/decorators/api-param.decorator';
 export * from './lib/documentation/decorators/api-query.decorator';
 export * from './lib/documentation/decorators/api-response.decorator';
 export * from './lib/helpers/map-response';
+export * from './lib/io-ts-types/object-id.types';
+export * from './lib/pipes/validation-with-codec.pipe';
 export * from './lib/mongo/config/mongo.types';
 export * from './lib/mongo/mongo.module';
+export * from './lib/http-middleware/http-middleware.module';

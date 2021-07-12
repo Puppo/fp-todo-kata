@@ -93,22 +93,22 @@
         }
       }
     },
-    "auth-infrasturcture": {
-      "root": "libs/auth/infrasturcture",
-      "sourceRoot": "libs/auth/infrasturcture/src",
+    "auth-infrastructure": {
+      "root": "libs/auth/infrastructure",
+      "sourceRoot": "libs/auth/infrastructure/src",
       "projectType": "library",
       "targets": {
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/auth/infrasturcture/**/*.ts"]
+            "lintFilePatterns": ["libs/auth/infrastructure/**/*.ts"]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/libs/auth/infrasturcture"],
+          "outputs": ["coverage/libs/auth/infrastructure"],
           "options": {
-            "jestConfig": "libs/auth/infrasturcture/jest.config.js",
+            "jestConfig": "libs/auth/infrastructure/jest.config.js",
             "passWithNoTests": true
           }
         }

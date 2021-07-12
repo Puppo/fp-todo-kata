@@ -1,5 +1,6 @@
 import * as t from 'io-ts';
 import * as types from 'io-ts-types';
+import { objectId } from '@puppo/shared/infrastructure';
 
 export const createTodoDtoCodec = t.intersection([
   t.type({
@@ -13,7 +14,7 @@ export const createTodoDtoCodec = t.intersection([
 
 export type CreateTodoDto = t.TypeOf<typeof createTodoDtoCodec>;
 
-export const todoIdCodec = types.UUID;
+export const todoIdCodec = objectId;
 export type TodoId = t.TypeOf<typeof todoIdCodec>;
 
 export const todoDtoCodec = t.intersection([

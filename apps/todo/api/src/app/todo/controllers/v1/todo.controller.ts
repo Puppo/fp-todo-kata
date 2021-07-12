@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
   mapTaskEToResponse,
@@ -6,12 +6,9 @@ import {
   ApiOkResponseWithCodec,
   ApiBodyWithCodec,
   ApiParamWithCodec,
+  ValidationWithCodecPipe,
 } from '@puppo/shared/infrastructure';
-import {
-  TodoService,
-  TODO_SERVICE,
-  mapTodoEntityToDto,
-} from '@puppo/todo/domain';
+import { TodoService, mapTodoEntityToDto } from '@puppo/todo/domain';
 import {
   CreateTodoDto,
   createTodoDtoCodec,
@@ -27,9 +24,7 @@ import * as O from 'fp-ts/Option';
 @ApiTags('todos')
 @Controller('todos')
 export class TodoController {
-  constructor(
-    @Inject(TODO_SERVICE) private readonly todoService: TodoService
-  ) {}
+  constructor(private readonly todoService: TodoService) {}
 
   @ApiBodyWithCodec({
     definition: createTodoDtoCodec,
@@ -40,7 +35,9 @@ export class TodoController {
     definition: todoDtoCodec,
   })
   @Post()
-  async insertTodo(@Body() todo: CreateTodoDto): Promise<TodoDto> {
+  async insertTodo(
+    @Body(new ValidationWithCodecPipe(createTodoDtoCodec)) todo: CreateTodoDto
+  ): Promise<TodoDto> {
     const saveTodo = pipe(
       this.todoService.createTodo(todo),
       TE.map(mapTodoEntityToDto),
@@ -59,7 +56,9 @@ export class TodoController {
     definition: todoDtoCodec,
   })
   @Get('/:id')
-  async getById(@Param('id') id: TodoId): Promise<TodoDto> {
+  async getById(
+    @Param('id', new ValidationWithCodecPipe(todoIdCodec)) id: TodoId
+  ): Promise<TodoDto> {
     const todo = pipe(
       this.todoService.getById(id),
       TE.map(flow(O.map(mapTodoEntityToDto))),

@@ -1,11 +1,20 @@
 import { Module } from '@nestjs/common';
-
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import {
+  ConfigurationModule,
+  HttpMiddlewareModule,
+  MongoModule,
+} from '@puppo/shared/infrastructure';
+import { environment } from '../environments/environment';
+import { AuthHttpModule } from './auth/auth-http.module';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ConfigurationModule.forRoot({
+      envFolder: environment.envFolder,
+    }),
+    HttpMiddlewareModule,
+    MongoModule,
+    AuthHttpModule,
+  ],
 })
 export class AppModule {}

@@ -1,1 +1,1 @@
-export type Entity<T, Key = number> = Readonly<T & { id: Key }>;
+export type Entity<Key, T> = Readonly<T & { id: Key }>;

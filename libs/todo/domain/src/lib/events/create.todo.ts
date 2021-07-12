@@ -1,5 +1,5 @@
 import { DomainEvent } from '@puppo/shared/kernel';
-import { TodoEntity } from '../entity/todo.entity';
+import { TodoEntity } from '../entities/todo.entity';
 
 const CREATE_TODO_EVENT_NAME = 'CREATE_TODO';
 type CreateTodoEventPayload = Omit<TodoEntity, 'id' | 'createAt'>;

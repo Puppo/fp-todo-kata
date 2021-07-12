@@ -1,6 +1,10 @@
 import { Module } from '@nestjs/common';
 
-import { ConfigurationModule, MongoModule } from '@puppo/shared/infrastructure';
+import {
+  ConfigurationModule,
+  HttpMiddlewareModule,
+  MongoModule,
+} from '@puppo/shared/infrastructure';
 import { environment } from '../environments/environment';
 
 import { TodoHttpModule } from './todo/todo-http.module';
@@ -10,6 +14,7 @@ import { TodoHttpModule } from './todo/todo-http.module';
     ConfigurationModule.forRoot({
       envFolder: environment.envFolder,
     }),
+    HttpMiddlewareModule,
     MongoModule,
     TodoHttpModule,
   ],

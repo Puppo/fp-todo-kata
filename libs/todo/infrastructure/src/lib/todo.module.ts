@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TODO_REPOSITORY_PROVIDER } from './repository/todo.repository';
+import { TODO_REPOSITORY_PROVIDER } from './repositories/todo.repository';
 import { Todo, TodoSchema } from './schemas/todo.schema';
 import { TODO_SERVICE_PROVIDER } from './services/todo.service';
 
