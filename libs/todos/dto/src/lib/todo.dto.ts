@@ -1,7 +1,7 @@
 import * as t from 'io-ts';
 import * as types from 'io-ts-types';
 
-const createTodoDtoCodec = t.intersection([
+export const createTodoDtoCodec = t.intersection([
   t.type({
     name: t.string,
   }),
@@ -13,12 +13,12 @@ const createTodoDtoCodec = t.intersection([
 
 export type CreateTodoDto = t.TypeOf<typeof createTodoDtoCodec>;
 
-const todoId = t.string;
-export type TodoId = t.TypeOf<typeof todoId>;
+export const todoIdCodec = types.UUID;
+export type TodoId = t.TypeOf<typeof todoIdCodec>;
 
-const todoDtoCodec = t.intersection([
+export const todoDtoCodec = t.intersection([
   t.type({
-    id: t.string,
+    id: todoIdCodec,
     createdAt: types.DateFromISOString,
   }),
   createTodoDtoCodec,
