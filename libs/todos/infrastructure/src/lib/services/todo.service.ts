@@ -1,6 +1,7 @@
 import { ClassProvider, Inject, Injectable } from '@nestjs/common';
 import {
   TodoEntity,
+  TodoEntityId,
   TodoRepository,
   TodoService,
   TODO_REPOSITORY,
@@ -8,6 +9,7 @@ import {
 import { CreateTodoDto } from '@puppo/todos/dto';
 import { ApplicationException } from '@puppo/shared/kernel';
 import * as TE from 'fp-ts/TaskEither';
+import * as O from 'fp-ts/Option';
 
 @Injectable()
 class TodoServiceImpl implements TodoService {
@@ -19,6 +21,12 @@ class TodoServiceImpl implements TodoService {
     todoDto: CreateTodoDto
   ): TE.TaskEither<ApplicationException, TodoEntity> {
     return this.todoRepository.save(todoDto);
+  }
+
+  getById(
+    id: TodoEntityId
+  ): TE.TaskEither<ApplicationException, O.Option<TodoEntity>> {
+    return this.todoRepository.getById(id);
   }
 }
 

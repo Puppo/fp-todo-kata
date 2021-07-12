@@ -5,9 +5,9 @@ import {
   ApplicationExtendedException,
 } from '@puppo/shared/kernel';
 import { TodoEntity, TodoEntityId, TodoRepository } from '@puppo/todos/domain';
-import { pipe } from 'fp-ts/function';
+import { pipe, flow } from 'fp-ts/function';
 import * as TE from 'fp-ts/TaskEither';
-import * as TO from 'fp-ts/TaskOption';
+import * as O from 'fp-ts/Option';
 import { Model } from 'mongoose';
 
 import * as todoMapper from '../helpers/todo.mapper';
@@ -36,16 +36,19 @@ class TodoMongoRepository implements TodoRepository {
     );
   }
 
-  get(id: TodoEntityId): TO.TaskOption<TodoEntity> {
+  getById(
+    id: TodoEntityId
+  ): TE.TaskEither<ApplicationException, O.Option<TodoEntity>> {
     return pipe(
-      TO.tryCatch(() =>
-        this.todoModel
-          .findOne({
-            id,
-          })
-          .exec()
+      TE.tryCatch(
+        () => this.todoModel.findById(id).exec(),
+        (error) =>
+          new ApplicationExtendedException(
+            `Problem on retrieve todo with id ${id} from mongo db collection`,
+            error
+          )
       ),
-      TO.map(todoMapper.schemaToEntity)
+      TE.map(flow(O.fromNullable, O.map(todoMapper.schemaToEntity)))
     );
   }
 }

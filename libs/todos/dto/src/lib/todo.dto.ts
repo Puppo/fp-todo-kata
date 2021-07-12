@@ -13,6 +13,9 @@ const createTodoDtoCodec = t.intersection([
 
 export type CreateTodoDto = t.TypeOf<typeof createTodoDtoCodec>;
 
+const todoId = t.string;
+export type TodoId = t.TypeOf<typeof todoId>;
+
 const todoDtoCodec = t.intersection([
   t.type({
     id: t.string,

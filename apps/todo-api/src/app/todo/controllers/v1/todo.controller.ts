@@ -1,13 +1,17 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
-import { mapTaskEToResponse } from '@puppo/shared/infrastructure';
+import { Body, Controller, Get, Inject, Param, Post } from '@nestjs/common';
+import {
+  mapTaskEToResponse,
+  mapTaskEWithOptionToResponse,
+} from '@puppo/shared/infrastructure';
 import {
   TodoService,
   TODO_SERVICE,
   mapTodoEntityToDto,
 } from '@puppo/todos/domain';
-import { CreateTodoDto, TodoDto } from '@puppo/todos/dto';
+import { CreateTodoDto, TodoDto, TodoId } from '@puppo/todos/dto';
 import { pipe } from 'fp-ts/function';
 import * as TE from 'fp-ts/TaskEither';
+import * as TO from 'fp-ts/TaskOption';
 
 @Controller('todos')
 export class TodoController {
@@ -19,8 +23,18 @@ export class TodoController {
   async insertTodo(@Body() todo: CreateTodoDto): Promise<TodoDto> {
     const saveTodo = pipe(
       this.todoService.createTodo(todo),
-      TE.map(mapTodoEntityToDto)
+      TE.map(mapTodoEntityToDto),
+      mapTaskEToResponse
     );
-    return await mapTaskEToResponse(saveTodo);
+    return await saveTodo;
+  }
+
+  @Get('/:id')
+  async getById(@Param('id') id: TodoId): Promise<TodoDto> {
+    const todo = pipe(
+      this.todoService.getById(id),
+      mapTaskEWithOptionToResponse
+    );
+    return await todo;
   }
 }
