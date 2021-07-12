@@ -51,17 +51,13 @@
     "todo-app": {
       "tags": []
     },
-    "todo-app-e2e": {
-      "tags": [],
-      "implicitDependencies": ["todo-app"]
-    },
-    "todos-domain": {
+    "todo-domain": {
       "tags": []
     },
-    "todos-dto": {
+    "todo-dto": {
       "tags": []
     },
-    "todos-infrastructure": {
+    "todo-infrastructure": {
       "tags": []
     }
   }

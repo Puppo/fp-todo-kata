@@ -22,9 +22,9 @@
         "libs/shared/infrastructure/src/index.ts"
       ],
       "@puppo/shared/kernel": ["libs/shared/kernel/src/index.ts"],
-      "@puppo/todos/domain": ["libs/todos/domain/src/index.ts"],
-      "@puppo/todos/dto": ["libs/todos/dto/src/index.ts"],
-      "@puppo/todos/infrastructure": ["libs/todos/infrastructure/src/index.ts"]
+      "@puppo/todo/domain": ["libs/todo/domain/src/index.ts"],
+      "@puppo/todo/dto": ["libs/todo/dto/src/index.ts"],
+      "@puppo/todo/infrastructure": ["libs/todo/infrastructure/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
