@@ -7,5 +7,9 @@ module.exports = {
     '<rootDir>/libs/shared/kernel',
     '<rootDir>/libs/todos/infrastructure',
     '<rootDir>/libs/shared/infrastructure',
+    '<rootDir>/libs/auth/domain',
+    '<rootDir>/libs/auth/dto',
+    '<rootDir>/libs/auth/infrasturcture',
+    '<rootDir>/apps/auth/api',
   ],
 };

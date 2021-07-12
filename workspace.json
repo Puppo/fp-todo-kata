@@ -1,6 +1,139 @@
 {
   "version": 2,
   "projects": {
+    "auth-api": {
+      "root": "apps/auth/api",
+      "sourceRoot": "apps/auth/api/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/apps/auth/api",
+            "main": "apps/auth/api/src/main.ts",
+            "tsConfig": "apps/auth/api/tsconfig.app.json",
+            "assets": [
+              "apps/auth/api/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/auth/api/src/environments/environment.ts",
+                  "with": "apps/auth/api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "auth-api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/auth/api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/auth/api"
+          ],
+          "options": {
+            "jestConfig": "apps/auth/api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth-domain": {
+      "root": "libs/auth/domain",
+      "sourceRoot": "libs/auth/domain/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth/domain/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/auth/domain"
+          ],
+          "options": {
+            "jestConfig": "libs/auth/domain/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth-dto": {
+      "root": "libs/auth/dto",
+      "sourceRoot": "libs/auth/dto/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth/dto/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/auth/dto"
+          ],
+          "options": {
+            "jestConfig": "libs/auth/dto/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "auth-infrasturcture": {
+      "root": "libs/auth/infrasturcture",
+      "sourceRoot": "libs/auth/infrasturcture/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/auth/infrasturcture/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/libs/auth/infrasturcture"
+          ],
+          "options": {
+            "jestConfig": "libs/auth/infrasturcture/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
     "shared-infrastructure": {
       "root": "libs/shared/infrastructure",
       "sourceRoot": "libs/shared/infrastructure/src",

@@ -27,6 +27,18 @@
     ]
   },
   "projects": {
+    "auth-api": {
+      "tags": []
+    },
+    "auth-domain": {
+      "tags": []
+    },
+    "auth-dto": {
+      "tags": []
+    },
+    "auth-infrasturcture": {
+      "tags": []
+    },
     "shared-infrastructure": {
       "tags": []
     },

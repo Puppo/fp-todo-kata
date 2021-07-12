@@ -15,6 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@puppo/auth/domain": ["libs/auth/domain/src/index.ts"],
+      "@puppo/auth/dto": ["libs/auth/dto/src/index.ts"],
+      "@puppo/auth/infrasturcture": ["libs/auth/infrasturcture/src/index.ts"],
       "@puppo/shared/infrastructure": [
         "libs/shared/infrastructure/src/index.ts"
       ],
