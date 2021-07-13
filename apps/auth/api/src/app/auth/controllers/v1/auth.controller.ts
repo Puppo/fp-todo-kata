@@ -4,7 +4,6 @@ import {
   ApiBodyWithCodec,
   ApiOkResponseWithCodec,
   ApiResponseWithCodec,
-  mapTaskEToResponse,
   ValidationWithCodecPipe,
 } from '@puppo/shared/infrastructure';
 import {
@@ -20,11 +19,17 @@ import { UserService, mapTodoEntityToDto } from '@puppo/auth/domain';
 import * as TE from 'fp-ts/TaskEither';
 import { pipe } from 'fp-ts/function';
 import { genericErrorDtoCodec } from '@puppo/shared/kernel';
+import { MapToResponseService } from '@puppo/shared/infrastructure';
 
 @ApiTags('auth')
 @Controller('auth')
 export class AuthControllerV1 {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly mapToResponseService: MapToResponseService,
+    private readonly userService: UserService
+  ) {
+    this.mapToResponseService.setContext(this.constructor.name);
+  }
 
   @ApiBodyWithCodec({
     definition: signUpUserDtoCodec,
@@ -46,7 +51,7 @@ export class AuthControllerV1 {
     return pipe(
       this.userService.signUp(user),
       TE.map(mapTodoEntityToDto),
-      mapTaskEToResponse
+      this.mapToResponseService.mapTaskEToResponse
     );
   }
 
@@ -77,7 +82,7 @@ export class AuthControllerV1 {
       this.userService.signIn(credentials),
       TE.chain((user) => this.userService.generateAuthToken(user)),
       TE.map((token) => ({ token })),
-      mapTaskEToResponse
+      this.mapToResponseService.mapTaskEToResponse
     );
   }
 }

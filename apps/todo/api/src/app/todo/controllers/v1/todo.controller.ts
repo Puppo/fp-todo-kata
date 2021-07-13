@@ -1,13 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
-  mapTaskEToResponse,
-  mapTaskEWithOToResponse,
   ApiOkResponseWithCodec,
   ApiBodyWithCodec,
   ApiParamWithCodec,
   ValidationWithCodecPipe,
   ApiResponseWithCodec,
+  MapToResponseService,
 } from '@puppo/shared/infrastructure';
 import { TodoService, mapTodoEntityToDto } from '@puppo/todo/domain';
 import {
@@ -26,7 +25,12 @@ import { genericErrorDtoCodec } from '@puppo/shared/kernel';
 @ApiTags('todos')
 @Controller('todos')
 export class TodoController {
-  constructor(private readonly todoService: TodoService) {}
+  constructor(
+    private readonly mapToResponseService: MapToResponseService,
+    private readonly todoService: TodoService
+  ) {
+    this.mapToResponseService.setContext(this.constructor.name);
+  }
 
   @ApiBodyWithCodec({
     definition: createTodoDtoCodec,
@@ -48,7 +52,7 @@ export class TodoController {
     return pipe(
       this.todoService.createTodo(todo),
       TE.map(mapTodoEntityToDto),
-      mapTaskEToResponse
+      this.mapToResponseService.mapTaskEToResponse
     );
   }
 
@@ -73,7 +77,7 @@ export class TodoController {
     return pipe(
       this.todoService.getById(id),
       TE.map(flow(O.map(mapTodoEntityToDto))),
-      mapTaskEWithOToResponse
+      this.mapToResponseService.mapTaskEWithOToResponse
     );
   }
 }
