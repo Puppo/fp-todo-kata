@@ -97,6 +97,12 @@ class UserServiceImpl implements UserService {
       )
     );
   }
+
+  getUserById(
+    id: UserEntityId
+  ): TE.TaskEither<ApplicationException, O.Option<UserEntity>> {
+    return this.userRepository.getById(id);
+  }
 }
 
 export const USER_SERVICE_PROVIDER: ClassProvider = {

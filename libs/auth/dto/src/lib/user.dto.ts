@@ -11,7 +11,7 @@ export const signUpUserDtoCodec = t.type({
 
 export type SignUpUserDto = t.TypeOf<typeof signUpUserDtoCodec>;
 
-const userIdDtoCodec = objectId;
+export const userIdDtoCodec = objectId;
 export type UserIdDto = t.TypeOf<typeof userIdDtoCodec>;
 
 export const userDtoCodec = t.type({

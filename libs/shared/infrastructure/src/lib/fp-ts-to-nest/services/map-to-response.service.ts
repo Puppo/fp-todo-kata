@@ -21,9 +21,9 @@ import * as TE from 'fp-ts/TaskEither';
 export class MapToResponseService {
   constructor(private readonly logger: Logger) {}
 
-  setContext(ctx: string): void {
+  setContext = (ctx: string): void => {
     this.logger.setContext(ctx);
-  }
+  };
 
   mapTaskEToResponse = async <T>(
     taskE: TE.TaskEither<ApplicationException, T>

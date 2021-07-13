@@ -2,7 +2,7 @@ import { AuthCredentialsDto, SignUpUserDto } from '@puppo/auth/dto';
 import { ApplicationException } from '@puppo/shared/kernel';
 import * as TE from 'fp-ts/TaskEither';
 import * as O from 'fp-ts/Option';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity, UserEntityId } from '../entities/user.entity';
 import { AuthToken } from '../entities/auth.entity';
 
 export abstract class UserService {
@@ -17,4 +17,8 @@ export abstract class UserService {
   abstract generateAuthToken(
     user: UserEntity
   ): TE.TaskEither<ApplicationException, AuthToken>;
+
+  abstract getUserById(
+    id: UserEntityId
+  ): TE.TaskEither<ApplicationException, O.Option<UserEntity>>;
 }
