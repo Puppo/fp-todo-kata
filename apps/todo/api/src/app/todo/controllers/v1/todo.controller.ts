@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
   mapTaskEToResponse,
-  mapTaskEWithOptionToResponse,
+  mapTaskEWithOToResponse,
   ApiOkResponseWithCodec,
   ApiBodyWithCodec,
   ApiParamWithCodec,
@@ -21,7 +21,7 @@ import {
 import { pipe, flow } from 'fp-ts/function';
 import * as TE from 'fp-ts/TaskEither';
 import * as O from 'fp-ts/Option';
-import { errorDtoCodec } from '@puppo/shared/kernel';
+import { genericErrorDtoCodec } from '@puppo/shared/kernel';
 
 @ApiTags('todos')
 @Controller('todos')
@@ -39,18 +39,17 @@ export class TodoController {
   @ApiResponseWithCodec({
     status: 500,
     description: 'Internal Server Error',
-    definition: errorDtoCodec,
+    definition: genericErrorDtoCodec,
   })
   @Post()
   async insertTodo(
     @Body(new ValidationWithCodecPipe(createTodoDtoCodec)) todo: CreateTodoDto
   ): Promise<TodoDto> {
-    const saveTodo = pipe(
+    return pipe(
       this.todoService.createTodo(todo),
       TE.map(mapTodoEntityToDto),
       mapTaskEToResponse
     );
-    return await saveTodo;
   }
 
   @ApiParamWithCodec({
@@ -65,17 +64,16 @@ export class TodoController {
   @ApiResponseWithCodec({
     status: 500,
     description: 'Internal Server Error',
-    definition: errorDtoCodec,
+    definition: genericErrorDtoCodec,
   })
   @Get('/:id')
   async getById(
     @Param('id', new ValidationWithCodecPipe(todoIdCodec)) id: TodoId
   ): Promise<TodoDto> {
-    const todo = pipe(
+    return pipe(
       this.todoService.getById(id),
       TE.map(flow(O.map(mapTodoEntityToDto))),
-      mapTaskEWithOptionToResponse
+      mapTaskEWithOToResponse
     );
-    return await todo;
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import {
   ApiBodyWithCodec,
@@ -18,9 +18,8 @@ import {
 } from '@puppo/auth/dto';
 import { UserService, mapTodoEntityToDto } from '@puppo/auth/domain';
 import * as TE from 'fp-ts/TaskEither';
-import * as O from 'fp-ts/Option';
-import { pipe, flow } from 'fp-ts/function';
-import { errorDtoCodec } from '@puppo/shared/kernel';
+import { pipe } from 'fp-ts/function';
+import { genericErrorDtoCodec } from '@puppo/shared/kernel';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -38,7 +37,7 @@ export class AuthControllerV1 {
   @ApiResponseWithCodec({
     status: 500,
     description: 'Internal Server Error',
-    definition: errorDtoCodec,
+    definition: genericErrorDtoCodec,
   })
   @Post('sign-up')
   async signUp(
@@ -60,9 +59,14 @@ export class AuthControllerV1 {
     description: 'The new user',
   })
   @ApiResponseWithCodec({
+    status: 401,
+    description: 'Unauthorize error',
+    definition: genericErrorDtoCodec,
+  })
+  @ApiResponseWithCodec({
     status: 500,
     description: 'Internal Server Error',
-    definition: errorDtoCodec,
+    definition: genericErrorDtoCodec,
   })
   @Post('sign-in')
   async signIn(
@@ -71,17 +75,8 @@ export class AuthControllerV1 {
   ): Promise<AuthTokenDto> {
     return pipe(
       this.userService.signIn(credentials),
-      TE.chain(
-        flow(
-          O.fold(
-            () => {
-              throw new UnauthorizedException();
-            },
-            (user) => this.userService.generateAuthToken(user)
-          ),
-          TE.map((token) => ({ token }))
-        )
-      ),
+      TE.chain((user) => this.userService.generateAuthToken(user)),
+      TE.map((token) => ({ token })),
       mapTaskEToResponse
     );
   }

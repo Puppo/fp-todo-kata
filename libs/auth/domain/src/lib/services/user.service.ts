@@ -12,7 +12,7 @@ export abstract class UserService {
 
   abstract signIn(
     credentials: AuthCredentialsDto
-  ): TE.TaskEither<ApplicationException, O.Option<UserEntity>>;
+  ): TE.TaskEither<ApplicationException, UserEntity>;
 
   abstract generateAuthToken(
     user: UserEntity

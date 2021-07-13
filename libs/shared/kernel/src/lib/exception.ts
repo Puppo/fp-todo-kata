@@ -13,6 +13,8 @@ export class ApplicationException extends Error {
   }
 }
 
+export class UnauthorizedApplicationException extends ApplicationException {}
+
 export class ApplicationExtendedException extends ApplicationException {
   public originalError: Error | unknown;
 

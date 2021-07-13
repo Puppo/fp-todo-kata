@@ -1,9 +1,8 @@
 import * as t from 'io-ts';
 
-export const errorDtoCodec = t.type({
+export const genericErrorDtoCodec = t.type({
   statusCode: t.number,
   message: t.string,
-  error: t.string,
 });
 
-export type ErrorDto = t.TypeOf<typeof errorDtoCodec>;
+export type GenericErrorDto = t.TypeOf<typeof genericErrorDtoCodec>;
