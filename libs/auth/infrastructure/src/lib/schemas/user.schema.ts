@@ -8,6 +8,7 @@ export type UserDocument = User & mongoose.Document<UserEntityId>;
 export class User {
   @Prop({
     required: true,
+    unique: true,
   })
   username: string;
 

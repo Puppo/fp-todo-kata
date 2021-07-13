@@ -7,7 +7,7 @@ import reporter from 'io-ts-reporters';
 const authConfigCodec = t.readonly(
   t.type({
     secret: t.string,
-    expirationIn: t.union([t.string, types.IntFromString]),
+    expiresIn: t.union([t.string, types.IntFromString]),
   })
 );
 
@@ -16,7 +16,7 @@ export type AuthConfig = t.TypeOf<typeof authConfigCodec>;
 const authConfigLoad = (): AuthConfig | never => {
   const config = {
     secret: process.env.AUTH_PRIVATE_KEY,
-    expirationIn: process.env.AUTH_EXPIRATION || '24h',
+    expiresIn: process.env.AUTH_EXPIRES_IN || '24h',
   };
 
   const result = authConfigCodec.decode(config);
